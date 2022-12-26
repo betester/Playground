@@ -83,23 +83,23 @@ export const Canvas: FC<CanvasProps> = ({
     context.scale(zoom, zoom);
 
     for (
-      let x = -canvas.width - Math.abs(canvasPos.x);
-      x < canvas.width + Math.abs(canvasPos.x);
+      let x = -canvas.width/zoom - Math.abs(canvasPos.x);
+      x < canvas.width/zoom + Math.abs(canvasPos.x);
       x += 50
     ) {
       context.beginPath();
-      context.moveTo(x, -canvas.height - Math.abs(canvasPos.y));
-      context.lineTo(x, canvas.height + Math.abs(canvasPos.y));
+      context.moveTo(x, -canvas.height/zoom - Math.abs(canvasPos.y));
+      context.lineTo(x, canvas.height/zoom + Math.abs(canvasPos.y));
       context.stroke();
     }
     for (
-      let y = -canvas.height - Math.abs(canvasPos.y);
-      y < canvas.height + Math.abs(canvasPos.y);
+      let y = -canvas.height/zoom - Math.abs(canvasPos.y);
+      y < canvas.height/zoom + Math.abs(canvasPos.y);
       y += 50
     ) {
       context.beginPath();
-      context.moveTo(-canvas.width - Math.abs(canvasPos.x), y);
-      context.lineTo(canvas.width + Math.abs(canvasPos.x), y);
+      context.moveTo(-canvas.width/zoom - Math.abs(canvasPos.x), y);
+      context.lineTo(canvas.width/zoom + Math.abs(canvasPos.x), y);
       context.stroke();
     }
 
