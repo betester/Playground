@@ -13,6 +13,8 @@ export default function Home() {
   return (
     <Layout>
       <Heading>Playground</Heading>
+      <p>Press ctrl + wheel to zoom in/out</p>
+      <p>Press ctrl + left click to drag the canvas</p>
       <CanvasLayout>
         <Canvas
           circles={circles}

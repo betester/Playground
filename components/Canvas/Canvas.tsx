@@ -15,6 +15,7 @@ export const Canvas: FC<CanvasProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [zoom, setZoom] = useState(1);
   const [canvasPos, setCanvasPos] = useState({ x: 0, y: 0 });
+  const [isRightClicked, setIsRightClicked] = useState(false);
   const MIN_ZOOM = 0.5;
   const MAX_ZOOM = 10;
 
@@ -46,12 +47,22 @@ export const Canvas: FC<CanvasProps> = ({
       }
     });
 
+    canvas.addEventListener("mousedown", (event: MouseEvent) => {
+      if (event.button === 0) {
+        setIsRightClicked(true);
+      }
+    });
+
+    canvas.addEventListener("mouseup", (event: MouseEvent) => {
+      if (event.button === 0) {
+        setIsRightClicked(false);
+      }
+    });
+
     // Handle mouse move events
     canvas.addEventListener("mousemove", (event: MouseEvent) => {
       // Check if the control key is pressed
-      if (event.ctrlKey) {
-        event.preventDefault();
-
+      if (event.ctrlKey && isRightClicked) {
         // Calculate the new canvas position
         const newPos = {
           x: canvasPos.x + event.movementX,
@@ -122,9 +133,10 @@ export const Canvas: FC<CanvasProps> = ({
     });
 
     context.restore();
-  }, [circles, interpolatedCircles, zoom, canvasPos]);
+  }, [circles, interpolatedCircles, zoom, canvasPos, isRightClicked]);
 
   const handleClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    if (event.ctrlKey) return;
     const canvas = canvasRef.current!;
     const rect = canvas.getBoundingClientRect();
     setCircles([
@@ -139,7 +151,7 @@ export const Canvas: FC<CanvasProps> = ({
   return (
     <div
       style={{
-        height: "50%",
+        height: "55%",
         overflow: "hidden",
         border: "1px solid black",
         borderRadius: "10px",
