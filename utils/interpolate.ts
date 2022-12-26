@@ -20,15 +20,12 @@ export const interpolate = ({ x, y, method = "newton", precision }: InterpolateA
             interpolatedXPoints = newtonInterpolation(Array.from({ length: x.length }, (_, i) => i + 1), x, precision);
             interpolatedYPoints = newtonInterpolation(Array.from({ length: y.length }, (_, i) => i + 1), y, precision);
 
-            console.log(x);
-            console.log(y);
 
 
             const result = interpolatedXPoints.map((point, index) => {
                 return { y: interpolatedYPoints[index], x: point }
             });
 
-            console.log(result);
 
             return result;
 

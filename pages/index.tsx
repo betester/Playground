@@ -20,6 +20,7 @@ export default function Home() {
           setCircles={setCircles}
         />
         <Sidebar
+          setCircles={setCircles}
           setInterpolatedCircles={setInterpolatedCircles}
           circles={circles}
         />

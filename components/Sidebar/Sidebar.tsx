@@ -13,18 +13,18 @@ const StyledSidebar = styled.div`
 
 interface SidebarProps {
   setInterpolatedCircles: any;
+  setCircles: any;
   circles: { x: number; y: number }[];
 }
 
 export const Sidebar: FC<SidebarProps> = ({
   setInterpolatedCircles,
+  setCircles,
   circles,
 }) => {
   const [interpolationMethod, setInterpolationMethod] = useState<
     "Newton" | "Vandermonde" | "Monomial"
   >("Newton");
-
-  const [precision, setPrecision] = useState(0.1);
 
   const onChangeMethod = (e: any) => {
     setInterpolationMethod(e.target.value);
@@ -34,11 +34,12 @@ export const Sidebar: FC<SidebarProps> = ({
     const x = circles.map((val) => val.x);
     const y = circles.map((val) => val.y);
 
-    setInterpolatedCircles(interpolate({ x: x, y: y, precision: precision }));
+    setInterpolatedCircles(interpolate({ x: x, y: y, precision: 0.1 }));
   };
 
   const onResetClick = () => {
     setInterpolatedCircles([]);
+    setCircles([]);
   };
 
   return (
