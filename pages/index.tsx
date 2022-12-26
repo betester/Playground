@@ -10,6 +10,8 @@ export default function Home() {
     { x: number; y: number }[]
   >([]);
 
+
+
   return (
     <Layout>
       <Heading>Playground</Heading>

@@ -23,8 +23,10 @@ export const Sidebar: FC<SidebarProps> = ({
   circles,
 }) => {
   const [interpolationMethod, setInterpolationMethod] = useState<
-    "Newton" | "Vandermonde" | "Monomial"
+    "Newton" | "Lagrange" | "Monomial"
   >("Newton");
+
+  const [performanceMeasure, setPerformanceMeasure] = useState<number>(0);
 
   const onChangeMethod = (e: any) => {
     setInterpolationMethod(e.target.value);
@@ -34,7 +36,19 @@ export const Sidebar: FC<SidebarProps> = ({
     const x = circles.map((val) => val.x);
     const y = circles.map((val) => val.y);
 
-    setInterpolatedCircles(interpolate({ x: x, y: y, precision: 0.1 }));
+    const startTime = performance.now();
+
+    const result = interpolate({
+      x: x,
+      y: y,
+      precision: 0.1,
+      method: interpolationMethod,
+    });
+
+    const endTime = performance.now();
+
+    setPerformanceMeasure(endTime - startTime);
+    setInterpolatedCircles(result);
   };
 
   const onResetClick = () => {
@@ -64,7 +78,7 @@ export const Sidebar: FC<SidebarProps> = ({
         </p>
         <Select onChange={onChangeMethod}>
           <option value={"Newton"}>Newton</option>
-          <option value={"Vandermonde"}>Vandermonde</option>
+          <option value={"Lagrange"}>Lagrange</option>
           <option value={"Monomial"}>Monomial</option>
         </Select>
       </div>
@@ -77,7 +91,7 @@ export const Sidebar: FC<SidebarProps> = ({
           computation nor matrix computation.
         </p>
       )}
-      {interpolationMethod === "Vandermonde" && (
+      {interpolationMethod === "Lagrange" && (
         <p>
           {" "}
           You {"don't"} even need to construct a matrix to create the
@@ -97,6 +111,10 @@ export const Sidebar: FC<SidebarProps> = ({
         have, the more accurate the polynomial that formed. But this is not the
         case for Interpolation, the more points you have, the more inaccurate
         polynomial, this is called as {"Runge's"} Phenomenon.
+      </p>
+      <p>
+        Computation time taken :{" "}
+        {`${performanceMeasure.toFixed(3)} milliseconds`}
       </p>
       <div
         style={{
