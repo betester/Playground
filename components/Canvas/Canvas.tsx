@@ -1,5 +1,5 @@
-import { assert } from "console";
 import { useRef, useEffect, useState, FC } from "react";
+import useSound from "use-sound";
 
 interface CanvasProps {
   circles: { x: number; y: number }[];
@@ -13,11 +13,12 @@ export const Canvas: FC<CanvasProps> = ({
   setCircles,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [play] = useSound("/bubble.mp3");
   const [zoom, setZoom] = useState(1);
   const [canvasPos, setCanvasPos] = useState({ x: 0, y: 0 });
   const [isRightClicked, setIsRightClicked] = useState(false);
-  const MIN_ZOOM = 0.5;
-  const MAX_ZOOM = 10;
+  const MIN_ZOOM = 0.4;
+  const MAX_ZOOM = 2;
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -138,6 +139,7 @@ export const Canvas: FC<CanvasProps> = ({
   const handleClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (event.ctrlKey) return;
     const canvas = canvasRef.current!;
+    play({ playbackRate: 10 });
     const rect = canvas.getBoundingClientRect();
     setCircles([
       ...circles,

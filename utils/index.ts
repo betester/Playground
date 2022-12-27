@@ -1,2 +1,3 @@
-export * from './interpolate'
-export * from './piecewise-interpolate'
+export * from './interpolate';
+export * from './linear-regression';
+export * from './piecewise-interpolate';

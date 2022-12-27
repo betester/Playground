@@ -1,10 +1,9 @@
 import { FC, useState } from "react";
 import styled from "styled-components";
 import { Select } from "../Input";
-import { Button } from "../Button";
-import { interpolate } from "../../utils";
 import { Interpolation } from "./Interpolation";
 import { PiecewiseInterpolation } from "./PiecewiseInterpolation";
+import { LinearRegression } from "./LinearRegression";
 
 const StyledSidebar = styled.div`
   background-color: #f5ebe0;
@@ -25,7 +24,7 @@ export const Sidebar: FC<SidebarProps> = ({
   circles,
 }) => {
   const [selectedTopic, setSelectedTopic] = useState<
-    "Interpolation" | "Piecewise Interpolation"
+    "Interpolation" | "Piecewise Interpolation" | "Linear Regression"
   >("Interpolation");
 
   const onChangeTopic = (e: any) => {
@@ -39,6 +38,7 @@ export const Sidebar: FC<SidebarProps> = ({
         <option value={"Piecewise Interpolation"}>
           Piecewise Interpolation
         </option>
+        <option value={"Linear Regression"}>Linear Regression</option>
       </Select>
       {selectedTopic === "Interpolation" && (
         <Interpolation
@@ -52,6 +52,13 @@ export const Sidebar: FC<SidebarProps> = ({
           setInterpolatedCircles={setInterpolatedCircles}
           setCircles={setCircles}
           circles={circles}
+        />
+      )}
+      {selectedTopic === "Linear Regression" && (
+        <LinearRegression
+          circles={circles}
+          setRegressedPoints={setInterpolatedCircles}
+          setCircles={setCircles}
         />
       )}
     </StyledSidebar>
