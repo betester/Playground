@@ -52,18 +52,11 @@ const pieceWiseInterpolation = (x: number[], y: number[], precision: number) => 
     h[i] = x[i + 1] - x[i];
   }
 
-  console.log("h");
-  console.log(h);
-
   const g: number[] = Array.from({ length: n - 1 }, (_) => 0);
 
   for (let i = 1; i < n - 2; i++) {
     g[i] = 6 * ((y[i + 2] - y[i + 1]) / h[i + 1] - (y[i + 1] - y[i]) / h[i]) / (h[i] + h[i + 1]);
   }
-
-  console.log("g")
-  console.log(g)
-
   let A: number[][] = Array(n - 1).fill(Array(n - 1).fill(0)).map(a => a.slice());
 
   for (let i = 0; i < n - 1; i++) {
@@ -71,8 +64,6 @@ const pieceWiseInterpolation = (x: number[], y: number[], precision: number) => 
   }
 
 
-  console.log("A")
-  console.log(A)
 
 
   for (let i = 0; i < n - 2; i++) {
@@ -83,13 +74,9 @@ const pieceWiseInterpolation = (x: number[], y: number[], precision: number) => 
 
   A = toU(A);
 
-  console.log("T")
-  console.log(A)
+
 
   const s = bs(A, g);
-
-  console.log("s")
-  console.log(s)
 
   const a = Array.from({ length: n - 1 }, (_) => 0);
   const b = Array.from({ length: n - 1 }, (_) => 0);
@@ -110,16 +97,6 @@ const pieceWiseInterpolation = (x: number[], y: number[], precision: number) => 
 
   a[n - 2] = (-2 * b[n - 2]) / 6 * h[n - 2];
   c[n - 2] = (y[n - 1] - y[n - 2]) / h[n - 2] + (2 * b[n - 2] / 6 * h[n - 2]) * Math.pow(h[n - 2], 3) - b[n - 2] * Math.pow(h[n - 2], 2);
-
-  console.log("a")
-  console.log(a)
-  console.log("b")
-  console.log(b)
-  console.log("c")
-  console.log(c)
-  console.log("d")
-  console.log(d)
-
 
   const polynomial = (xx: number, i: number) => {
     return a[i - 1] * Math.pow(xx - x[i - 1], 3) + b[i - 1] * Math.pow(xx - x[i - 1], 2) + c[i - 1] * (xx - x[i - 1]) + d[i - 1];
