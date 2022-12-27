@@ -100,7 +100,7 @@ export const LinearRegression: FC<LinearRegressionProps> = ({
           Reset
         </Button>
         <Button onClick={onClick} backgroundColor="#FEC6C6">
-          Interpolate!
+          Regress!
         </Button>
       </div>
     </>

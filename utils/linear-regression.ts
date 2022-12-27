@@ -9,7 +9,9 @@ interface LinearRegressionArgs {
 // can be really inefficient as it uses normal equation
 export const linearRegression = ({ x, y, precision }: LinearRegressionArgs) => {
   // construct the matrix
-  
+  if (x.length != y.length) throw Error("x and y needs to be equal");
+  else if (x.length <= 1) throw Error("There should be at least 2 point available");
+
 
   const coefficients: number[][] = [];
 
